@@ -4,7 +4,9 @@
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-          <form action="" class="box">
+
+          <form action="" class="box" v-on:submit.prevent="submitForm">
+
             <div class="field">
               <label for="" class="label">Email</label>
               <div class="control has-icons-left">
@@ -42,17 +44,22 @@
 import {ref} from 'vue'
 import axios from 'axios'
 import {useAuthStore} from '@/stores/Auth.js'
+import {useRouter} from 'vue-router'
 
 const main=useAuthStore()
-
-axios.defaults.headers.common['Authorization']=''
+const router=useRouter()
 let username=ref('')
 let password=ref('')
 
+axios.defaults.headers.common['Authorization']=''
 localStorage.removeItem('token')
+
 const submitForm=()=>{
   if(username.value==''){
     alert('enter username')
+  }
+  else if(password.value==""){
+    alert('enter password')
   }
  else{
     let formdata={
@@ -60,12 +67,16 @@ const submitForm=()=>{
       password:password.value
     }
 
-    axios.post('/api/v1/token/login',formdata).then(res=>{
+    axios.post('/api/v1/token/login',formdata)
+    .then(res=>{
+
       const token=res.data.auth_token
       main.setToken(token)
+
       axios.defaults.headers.common['Authorization']="Token "+token
       localStorage.setItem('token',token)
-      this.$router.push('/')
+      router.push('/')     
+
     }).catch(err=>{
       console.log(err)
     })

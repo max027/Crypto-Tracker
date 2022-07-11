@@ -54,7 +54,10 @@
 <script setup>
 import {ref} from 'vue'
 import axios from 'axios'
+import {useRouter} from 'vue-router'
 
+
+const router=useRouter()
 axios.defaults.headers.common['Authorization']=""
 
 let username=ref('')
@@ -75,7 +78,7 @@ const submitForm=()=>{
     }
 
     axios.post('/api/v1/users/',formdata).then(res=>{
-      this.$router.push('/login')
+    router.push('/login')  
     }).catch(err=>{
       console.log(err)
     })
