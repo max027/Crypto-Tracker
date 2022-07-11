@@ -55,6 +55,8 @@
 import {ref} from 'vue'
 import axios from 'axios'
 
+axios.defaults.headers.common['Authorization']=""
+
 let username=ref('')
 let password=ref('')
 let password2=ref('')
