@@ -5,7 +5,7 @@
 * vue
 * pinia (store for vue)
 * vue router
-
+* axios
 # Backend
 * Django
 * djoser
