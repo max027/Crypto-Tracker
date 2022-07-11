@@ -53,6 +53,7 @@
 
 <script setup>
 import {ref} from 'vue'
+import axios from 'axios'
 
 let username=ref('')
 let password=ref('')
@@ -70,6 +71,12 @@ const submitForm=()=>{
       username:username.value,
       password:password.value
     }
+
+    axios.post('/api/v1/users/',formdata).then(res=>{
+      this.$router.push('/login')
+    }).catch(err=>{
+      console.log(err)
+    })
   }
 }
 </script>
