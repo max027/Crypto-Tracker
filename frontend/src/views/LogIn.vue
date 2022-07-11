@@ -8,7 +8,7 @@
             <div class="field">
               <label for="" class="label">Email</label>
               <div class="control has-icons-left">
-                <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" required>
+                <input type="email" v-model="username" placeholder="e.g. bobsmith@gmail.com" class="input" required>
                 <span class="icon is-small is-left">
                   <i class="fa fa-envelope"></i>
                 </span>
@@ -18,7 +18,7 @@
             <div class="field">
               <label for="" class="label">Password</label>
               <div class="control has-icons-left">
-                <input type="password" placeholder="*******" class="input" required>
+                <input type="password" placeholder="*******" v-model="password" class="input" required>
                 <span class="icon is-small is-left">
                   <i class="fa fa-lock"></i>
                 </span>
@@ -38,3 +38,37 @@
 </section>
 </template>
 
+<script setup>
+import {ref} from 'vue'
+import axios from 'axios'
+import {useAuthStore} from '@/stores/Auth.js'
+
+const main=useAuthStore()
+
+axios.defaults.headers.common['Authorization']=''
+let username=ref('')
+let password=ref('')
+
+localStorage.removeItem('token')
+const submitForm=()=>{
+  if(username.value==''){
+    alert('enter username')
+  }
+ else{
+    let formdata={
+      username:username.value,
+      password:password.value
+    }
+
+    axios.post('/api/v1/token/login',formdata).then(res=>{
+      const token=res.data.auth_token
+      main.setToken(token)
+      axios.defaults.headers.common['Authorization']="Token "+token
+      localStorage.setItem('token',token)
+      this.$router.push('/')
+    }).catch(err=>{
+      console.log(err)
+    })
+  }
+}
+</script>

@@ -17,7 +17,6 @@ if(token){
 }else{
 
     axios.defaults.headers.common['Authorization']=''
-
 }
 })
 
