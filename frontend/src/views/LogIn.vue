@@ -75,7 +75,7 @@ const submitForm=()=>{
 
       axios.defaults.headers.common['Authorization']="Token "+token
       localStorage.setItem('token',token)
-      router.push('/')     
+      router.push('/my-account')     
 
     }).catch(err=>{
       console.log(err)
