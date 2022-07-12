@@ -1,7 +1,7 @@
 <template>
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <router-link to="/" class="navbar-item">Crypto Tracker</router-link>
+    <router-link to="/my-account" class="navbar-item">Crypto Tracker</router-link>
     </div>
 
     <div class="navbar-item">
