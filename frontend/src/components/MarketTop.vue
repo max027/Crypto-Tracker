@@ -5,8 +5,6 @@ let large_volume=ref([])
 let top=ref([])
 let Highlight=ref([])
 let price_usd
-let top_gainer
-let temp=0
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -14,32 +12,30 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min); 
 }
 
-  fetch('https://data.messari.io/api/v1/assets?fields=id,slug,symbol,metrics/market_data/price_usd')
+async function getData() {
+  
+ await fetch('https://data.messari.io/api/v1/assets?fields=id,slug,symbol,metrics/market_data/price_usd')
  .then(res=>res.json())
   .then(data=>{
     price_usd=data.data
     for(let i=0;i<3;i++){
-      temp=price_usd[i].metrics.market_data.price_usd
-      large_volume.value.push(temp)
+      large_volume.value.push(price_usd[i].metrics.market_data.price_usd)
+    }
+
+    for (let i = 0; i < 3; i++) {
+      let temp=getRandomInt(4,19)
+      top.value.push({id:i,name:price_usd[temp].slug,value:price_usd[temp].metrics.market_data.price_usd})
     }
 
     for (let i = 0; i < 3; i++) {
       let temp=getRandomInt(4,19)
       let price=price_usd[temp].metrics.market_data.price_usd
-      let temp_name=price_usd[temp].slug
-      top_gainer={id:i,name:temp_name,value:price}
-      top.value.push(top_gainer)
-    }
-
-    for (let i = 0; i < 3; i++) {
-      let temp=getRandomInt(4,19)
-      let price=price_usd[temp].metrics.market_data.price_usd
-      let temp_name=price_usd[temp].slug
-      top_gainer={id:i,name:temp_name,value:price}
-      Highlight.value.push(top_gainer)
+      Highlight.value.push({id:i,name:price_usd[temp].slug,value:price_usd[temp].metrics.market_data.price_usd})
     }
   })
+}
 
+getData()
 </script>
 
 <template>
@@ -86,7 +82,7 @@ function getRandomInt(min, max) {
 }
 .main-container-market{
   width: var(--allview);
-  height: 100vh;
+  height: 400px ;
 }
 .top-market{
   width: var(--allview);
