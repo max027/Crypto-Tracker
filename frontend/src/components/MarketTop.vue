@@ -40,12 +40,13 @@ getData()
 
 <template>
 <section class="main-container-market">
+  <h1 class="Market">Market</h1>
   <div class="top-market">
     <div class="market-1 box">
       <h2 class="market-1-txt placeholder-txt">Top Gainer</h2>
       <ul class="names-container-1">
         <li class="list-name-1" v-for="i in top" :key="i.id">
-          {{i.name}} <div class="list-coin-name">{{i.value}}</div>
+         <div>{{i.name}}</div><div class="list-coin-name">{{i.value}}</div>
         </li>
       </ul>
    </div>
@@ -53,9 +54,9 @@ getData()
     <div class="market-2 box">
       <h2 class="market-2-txt placeholder-txt">Larg Volume</h2>
       <ul class="names-container-1">
-        <li class="list-name-1">BTC <div class="list-coin-name"> {{large_volume[0]}}</div>   </li>
-        <li class="list-name-1">ETH  <div class="list-coin-name">{{large_volume[1]}}</div></li>
-        <li class="list-name-1">USDT<div class="list-coin-name">{{large_volume[2]}}</div></li>
+        <li class="list-name-1"><div>BTC</div> <div class="list-coin-name"> {{large_volume[0]}}</div>   </li>
+        <li class="list-name-1"><div>ETH</div>  <div class="list-coin-name">{{large_volume[1]}}</div></li>
+        <li class="list-name-1"><div>USDT</div><div class="list-coin-name">{{large_volume[2]}}</div></li>
       </ul>
     </div>
 
@@ -63,7 +64,7 @@ getData()
      <h2 class="market-3-txt placeholder-txt">Highlight coin</h2> 
      <div class="names-container-1">
       <li class="list-name-1" v-for="i in Highlight" :key="i.id">
-        {{i.name}} <div class="list-coin-name">{{i.value}}</div>
+      <div>{{i.name}}</div> <div class="list-coin-name">{{i.value}}</div>
       </li>
      </div>
     </div>
@@ -83,6 +84,7 @@ getData()
 .main-container-market{
   width: var(--allview);
   height: 400px ;
+  background-color:rgb(203, 199, 199) ;
 }
 .top-market{
   width: var(--allview);
@@ -105,23 +107,32 @@ getData()
 }
 
 .placeholder-txt{
-  font-size: large;
+  font-size: medium;
+  margin-top: 10px;
+  margin-left: 15px;
 }
 
 .names-container-1{
   list-style-type: none;
   margin-top: 30px;
-  margin-left: 7px;
-  font-size: 1.3rem;
 }
 .list-name-1{
   padding: 10px;
   display:  flex;
   flex-direction: row;
   align-items: flex-start;
+  font-size: medium;
 }
-.list-coin-name{
-  padding-left: 37px;
+ul{
+  position: relative;
+  box-sizing: border-box;
+}
+
+li :nth-child(1){
+  width:100px;
+}
+.Market{
+  font-size: 2rem;
 }
 </style>
 
