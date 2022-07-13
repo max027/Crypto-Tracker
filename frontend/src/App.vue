@@ -14,7 +14,6 @@ const token=store.token
 
 if(token){
     auth.value=store.isAuthenticated
-    console.log(auth.value)
     axios.defaults.headers.common['Authorization']="Token "+token
 
 }else{
