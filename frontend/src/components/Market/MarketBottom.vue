@@ -1,9 +1,9 @@
 <script setup>
 import {ref} from 'vue'
-
+import {useRouter} from 'vue-router'
 let content=ref([])
 let temp
-
+const router=useRouter()
 async function fetchData() {
  await fetch('https://data.messari.io/api/v1/assets?fields=id,slug,symbol,metrics/market_data/price_usd,metrics/market_data/volume_last_24_hours,metrics/market_data/percent_change_btc_last_24_hours')
 
@@ -11,15 +11,22 @@ async function fetchData() {
   .then(data=>{
     temp=data.data
     for (let i = 0; i <10; i++) {
-      content.value.push({id:i,name:temp[i].slug,value:temp[i].metrics.market_data.price_usd,volume:temp[i].metrics.market_data.volume_last_24_hours,change:temp[i].metrics.market_data.percent_change_btc_last_24_hours}) 
+      content.value.push({id:i,name:temp[i].slug,symbol:temp[i].symbol,value:temp[i].metrics.market_data.price_usd,volume:temp[i].metrics.market_data.volume_last_24_hours,change:temp[i].metrics.market_data.percent_change_btc_last_24_hours}) 
     }
-    console.log(temp)
+    console.log(content.value)
   }
   )
 }
 
 fetchData()
-  
+const buyorder=(name)=>{
+router.push({
+  name:'order',
+  params:{
+    coin_name:name
+  }
+})
+} 
 </script>
 
 <template>
@@ -41,7 +48,7 @@ fetchData()
         <div class="volume-coin">{{i.volume}}</div>
         <div class="change-coin">{{i.change}}</div>
 
-        <div class="button is-primary">Buy</div>
+        <div class="button is-primary" @click="buyorder(i.symbol)">Buy</div>
         <div class="button is-danger btn-sell">Sell</div>
       </li>
     </ul>

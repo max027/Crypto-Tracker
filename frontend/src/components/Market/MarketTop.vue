@@ -1,9 +1,11 @@
 <script setup>
-import {ref} from 'vue'
+import {reactive} from 'vue'
 
-let large_volume=ref([])
-let top=ref([])
-let Highlight=ref([])
+let Volume_data=reactive({
+  large_volume:[],
+top:[],
+Highlight:[] 
+})
 let price_usd
 
 function getRandomInt(min, max) {
@@ -19,18 +21,18 @@ async function getData() {
   .then(data=>{
     price_usd=data.data
     for(let i=0;i<3;i++){
-      large_volume.value.push(price_usd[i].metrics.market_data.price_usd)
+      Volume_data.large_volume.push({id:i,name:price_usd[i].slug,value:price_usd[i].metrics.market_data.price_usd})
     }
 
     for (let i = 0; i < 3; i++) {
       let temp=getRandomInt(4,19)
-      top.value.push({id:i,name:price_usd[temp].slug,value:price_usd[temp].metrics.market_data.price_usd})
+      Volume_data.top.push({id:i,name:price_usd[temp].slug,value:price_usd[temp].metrics.market_data.price_usd})
     }
 
     for (let i = 0; i < 3; i++) {
       let temp=getRandomInt(4,19)
       let price=price_usd[temp].metrics.market_data.price_usd
-      Highlight.value.push({id:i,name:price_usd[temp].slug,value:price_usd[temp].metrics.market_data.price_usd})
+      Volume_data.Highlight.push({id:i,name:price_usd[temp].slug,value:price_usd[temp].metrics.market_data.price_usd})
     }
   })
 }
@@ -45,7 +47,7 @@ getData()
     <div class="market-1 box">
       <h2 class="market-1-txt placeholder-txt">Top Gainer</h2>
       <ul class="names-container-1">
-        <li class="list-name-1" v-for="i in top" :key="i.id">
+        <li class="list-name-1" v-for="i in Volume_data.top" :key="i.id">
          <div>{{i.name}}</div><div class="list-coin-name">{{i.value}}</div>
         </li>
       </ul>
@@ -54,16 +56,16 @@ getData()
     <div class="market-2 box">
       <h2 class="market-2-txt placeholder-txt">Larg Volume</h2>
       <ul class="names-container-1">
-        <li class="list-name-1"><div>BTC</div> <div class="list-coin-name"> {{large_volume[0]}}</div>   </li>
-        <li class="list-name-1"><div>ETH</div>  <div class="list-coin-name">{{large_volume[1]}}</div></li>
-        <li class="list-name-1"><div>USDT</div><div class="list-coin-name">{{large_volume[2]}}</div></li>
+     <li class="list-name-1" v-for="i in Volume_data.large_volume" :key="i.id">
+         <div>{{i.name}}</div><div class="list-coin-name">{{i.value}}</div>
+     </li>
       </ul>
     </div>
 
     <div class="market-3 box">
      <h2 class="market-3-txt placeholder-txt">Highlight coin</h2> 
      <div class="names-container-1">
-      <li class="list-name-1" v-for="i in Highlight" :key="i.id">
+      <li class="list-name-1" v-for="i in Volume_data.Highlight" :key="i.id">
       <div>{{i.name}}</div> <div class="list-coin-name">{{i.value}}</div>
       </li>
      </div>
