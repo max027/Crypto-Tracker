@@ -1,6 +1,16 @@
 <template>
   <div class="main-container-order box">
+    <div class="title-top">
+
    <h1 class="title-text-order">BTC</h1> 
+   <h1 class="title-text-order">Github</h1>
+   <div class="buy-btn-order">
+
+   <button class="button is-primary" width="10px">Buy</button>
+   </div>
+    </div>
+
+
     <div class="content-data-order ">
       <div class="content-container-1">
         
@@ -67,11 +77,17 @@
         </li>
       </ul>
       </div>
+      </div>
 
-
-
-
+    <div class="main-container-about">
+     <div class="content-data-about box">
+      <h1 class="content-title-about">About</h1>
+      <div class="content-content">
+       <p v-html="coin_data.about"></p>
+      </div>
     </div>
+    </div>
+
   </div>
 </template>
 
@@ -80,7 +96,6 @@ import {reactive} from 'vue'
 
 let props = defineProps({ coin_name: String });
 let assetKey=props.coin_name
-
 let coin_data=reactive({
   current_price:0,
   market_cap:0,
@@ -88,7 +103,8 @@ let coin_data=reactive({
  circulating_supply:0,
  alltime_high:0,
  alltime_low:0,
- percentage_change:0
+ percentage_change:0,
+ about:''
 })
 
 const fetch_coin= async()=>{
@@ -105,8 +121,17 @@ const fetch_coin= async()=>{
 
   })
 }
-fetch_coin()
 
+const fetch_detail=async ()=>{
+  await fetch(`https://data.messari.io/api/v2/assets/${assetKey}/profile`)
+    .then((res) => res.json())
+    .then((data) => {
+      coin_data.about= data.data.profile.general.background.background_details
+    });
+ 
+}
+fetch_coin()
+fetch_detail()
 </script>
 <style scoped>
 
@@ -152,4 +177,24 @@ fetch_coin()
   height: 300px;
   margin: 10px;
 } 
+.content-data-about{
+  margin:40px;
+}
+
+.content-title-about{
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+}
+.title-top{
+  display: flex;
+}
+
+.buy-btn-order{
+  padding-left: 50px;
+  padding-top: 23px;
+  margin-bottom: 9px;
+
+}
+
+
 </style>
