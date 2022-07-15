@@ -1,6 +1,7 @@
 from django.urls import path,include
-from .views import getorder
+from .views import getorder,updateorder
 urlpatterns = [
-    path('orderhistory/',getorder ),
+    path('getorder/',getorder ),
+    path('updateorder/',updateorder),
 ]
 

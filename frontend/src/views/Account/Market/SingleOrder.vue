@@ -6,7 +6,7 @@
    <h1 class="title-text-order">Github</h1>
    <div class="buy-btn-order">
 
-   <button class="button is-primary" width="10px">Buy</button>
+   <button class="button is-primary" width="10px" @click="Buy_coin(coin_data.current_price)">Buy</button>
    </div>
     </div>
 
@@ -93,7 +93,7 @@
 
 <script setup>
 import {reactive} from 'vue'
-
+import axios from 'axios'
 let props = defineProps({ coin_name: String });
 let assetKey=props.coin_name
 let coin_data=reactive({
@@ -129,6 +129,21 @@ const fetch_detail=async ()=>{
       coin_data.about= data.data.profile.general.background.background_details
     });
  
+}
+
+const Buy_coin=(price)=>{
+let formdata={
+  order_type:'B',
+  order_price:price,
+  coin_name:props.coin_name,
+  order_qty:3,
+}
+
+axios.put('/api/v1/updateorder/',formdata).then(res=>{
+  alert('sucess')
+}).catch(err=>{
+  console.log(err)
+})
 }
 fetch_coin()
 fetch_detail()

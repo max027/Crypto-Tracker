@@ -13,7 +13,6 @@ async function fetchData() {
     for (let i = 0; i <10; i++) {
       content.value.push({id:i,name:temp[i].slug,symbol:temp[i].symbol,value:temp[i].metrics.market_data.price_usd,volume:temp[i].metrics.market_data.volume_last_24_hours,change:temp[i].metrics.market_data.percent_change_btc_last_24_hours}) 
     }
-    console.log(content.value)
   }
   )
 }
