@@ -139,7 +139,7 @@ let formdata={
   order_qty:3,
 }
 
-axios.put('/api/v1/updateorder/',formdata).then(res=>{
+axios.put('api/v1/updateorder/',formdata).then(res=>{
   alert('sucess')
 }).catch(err=>{
   console.log(err)

@@ -13,8 +13,8 @@ def getorder(request):
 @api_view(['PUT'])
 def updateorder(request):
     data=request.data
-    serializer=OrderHistorySerializers(many=True,data=data)
-    print(data)
-    if serializer.is_valid(raise_exception=True):
+    serializer=OrderHistorySerializers(data=data)
+    if serializer.is_valid():
         serializer.save()
+    print(serializer.errors) 
     return Response(serializer.data)
