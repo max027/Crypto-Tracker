@@ -140,8 +140,13 @@ let formdata={
 }
 
 axios.put('api/v1/updateorder/',formdata).then(res=>{
-  alert('sucess')
 }).catch(err=>{
+  console.log(err)
+})
+
+axios.post('api/v1/updateportfolio/',formdata).then(res=>{
+})
+.catch(err=>{
   console.log(err)
 })
 }

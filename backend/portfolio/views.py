@@ -1,7 +1,6 @@
 from rest_framework.response import Response
-from uritemplate import partial
-from .serializers import OrderHistorySerializers
-from .models import OrderHistory
+from .serializers import OrderHistorySerializers,PortfolioSerializers
+from .models import OrderHistory,Portfolio
 from rest_framework.decorators import api_view
 
 @api_view(['GET'])
@@ -17,4 +16,25 @@ def updateorder(request):
     if serializer.is_valid():
         serializer.save()
     print(serializer.errors) 
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getportfolio(request):
+    portfolio=Portfolio.objects.all()
+    serializer=PortfolioSerializers(portfolio,many=True)
+    return Response(serializer.data)
+
+@api_view(['PUT','POST'])
+def updateportfolio(request):
+    data=request.data
+    obj=Portfolio._meta.get_field('total_investment')
+    serializer=PortfolioSerializers(data=data)
+    name=data
+    if serializer.is_valid():
+        if Portfolio.objects.filter(coin_name=name['coin_name']):
+            print('present')
+            total=name['order_price']
+        else:
+            serializer.save()        
+
     return Response(serializer.data)
