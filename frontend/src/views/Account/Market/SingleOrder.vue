@@ -139,16 +139,21 @@ let formdata={
   order_qty:3,
 }
 
+/**
+ * 
+ * 
 axios.put('api/v1/updateorder/',formdata).then(res=>{
 }).catch(err=>{
   console.log(err)
 })
+ */
 
 axios.post('api/v1/updateportfolio/',formdata).then(res=>{
 })
 .catch(err=>{
   console.log(err)
 })
+
 }
 fetch_coin()
 fetch_detail()
