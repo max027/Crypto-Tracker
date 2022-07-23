@@ -27,13 +27,12 @@ def getportfolio(request):
 @api_view(['PUT','POST'])
 def updateportfolio(request):
     data=request.data
-    obj=Portfolio._meta.get_field('total_investment')
     serializer=PortfolioSerializers(data=data)
     name=data
     if serializer.is_valid():
         if Portfolio.objects.filter(coin_name=name['coin_name']):
-            print('present')
             total=name['order_price']
+            print(total)
         else:
             serializer.save()        
 
